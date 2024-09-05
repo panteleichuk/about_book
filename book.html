@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Product Card UI Design</title>
+
+    <!-- Vendor Script -->
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+
+  <style>
+   @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,800&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background: #000;
+}
+
+
+.book {
+    --witdh: 200px;
+    --height: 300px;
+    --thick: 40px;
+    --inner: 6px;
+    --pages-bg: white;
+    --cover-bg: rgba(33,32,30,255);
+    --cover-radius: 6px;
+    position: relative;
+    width: var(--witdh);
+    height: var(--height);
+    transform: rotateY(-30deg) rotateX(30deg);
+    transition: 0.5s transform;
+}
+
+.book:hover {
+    transform: rotateY(-20deg) rotateX(20deg);
+}
+
+.book,
+.book__cover,
+.book__pages {
+    transform-style: preserve-3d;
+}
+
+.book__cover,
+.book__cover::before,
+.book__cover-img {
+    border-top-right-radius: var(--cover-radius);
+    border-bottom-right-radius: var(--cover-radius);
+    user-select: none;
+}
+
+.book__cover::before,
+.book__cover::after,
+.book__pages::before,
+.book__pages::after {
+    position: absolute;
+    content: '';
+    left: 0;
+    top: 0;
+    height: 100%;
+}
+
+.book__cover,
+.book__cover::before,
+.book__cover::after {
+    background-color: var(--cover-bg);
+}
+
+.book__cover {
+    width: 100%;
+    height: 100%;
+}
+
+.book__cover::before {
+    width: 100%;
+    transform: translateZ(calc(var(--thick)*-1));
+    box-shadow: 0 0 16px 1px rgba(0, 0, 0, 1);
+}
+
+.book__cover::after {
+    width: var(--thick);
+    transform-origin: left center;
+    transform: rotateY(90deg);
+}
+
+.book__cover-img {
+    width: 100%;
+    height: 100%;
+}
+
+.book__pages,
+.book__pages::before,
+.book__pages::after {
+    background: var(--pages-bg);
+}
+
+.book__pages {
+    position: absolute;
+    right: var(--inner);
+    top: var(--inner);
+    width: var(--thick);
+    height: calc(100% - var(--inner)*2);
+    transform-origin: right center;
+    transform: rotateY(-90deg);
+}
+
+.book__pages::before,
+.book__pages::after {
+    width: var(--thick);
+    height: calc(var(--witdh) - var(--inner));
+}
+
+.book__pages::before {
+    transform-origin: center top;
+    transform: rotateX(90deg);
+}
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 80%;
+    height: 100vh;
+    background: #fff;
+    margin-left: 10%;
+    margin-top: 2%;
+}
+
+.container .imgBx {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50%;
+    background: #212121;
+    transition: .3s linear;
+}
+
+.container .imgBx:before {
+    content: 'Барон';
+    position: absolute;
+    top: 0px;
+    left: 24px;
+    color: #000;
+    opacity: 0.2;
+    font-size: 7em;
+    font-weight: 800;
+}
+.container .imgBx::after {
+    content: 'Мюнхгаузен';
+    position: absolute;
+    top: 280px;
+    right: 0;
+    color: #000;
+    opacity: 0.2;
+    font-size: 5em;
+    font-weight: 800;
+}
+
+
+
+.container .details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 40px;
+}
+
+.container .details h2{
+    margin: 0;
+    padding: 0;
+    font-size: 2.4em;
+    line-height: 1em;
+    color: #444;
+}
+
+.container .details h2 span {
+    font-size: 0.4em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #999;
+}
+
+.container .details p {
+    max-width: 85%;
+    margin-left: 15%;
+    color: #333;
+    font-size: 15px;
+    margin-bottom: 36px;
+}
+
+.container .details h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 2.5em;
+    color: #a2a2a2;
+    float: left;
+}
+.container .details button {
+    background: #000;
+    color: #fff;
+    border: none;
+    outline: none;
+    padding: 15px 20px;
+    margin-top: 5px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-radius: 40px;
+    float: right;
+}
+
+.product-colors span {
+    width: 26px;
+    height: 26px;
+    top: 7px;
+    margin-right: 12px;
+    left: 10px;
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+
+
+.product-colors .active:after{
+    content: "";
+    width: 36px;
+    height: 36px;
+    border: 2px solid #000;
+    position: absolute;
+    border-radius: 50%;
+    box-sizing: border-box;
+    left: -5px;
+    top: -5px;
+}
+
+/* responsive */
+/* @media (max-width: 1080px) { */
+    .container {
+        height: auto;
+    }
+    .container .imgBx {
+        padding: 40px;
+        box-sizing: border-box;
+        width: 100% !important;
+        height: auto;
+        text-align: center;
+        overflow: hidden;
+    }
+ 
+    .details {
+        width: 100% !important;
+        height: auto;
+        padding: 20px;
+    }
+    .container .details p {
+        margin-left: 0;
+        max-width: 100%;
+    }
+/* } */
+
+
+  </style>
+  <title>
+    Барон Мюнхгаузен
+  </title>
+  <link rel="icon" href="icon.png">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="imgBx">
+            <div class="book">
+                <div class="book__cover">
+                  <img class="book__cover-img" 
+                  src="book.jpg">
+                </div>
+                <div class="book__pages"></div>
+              </div>
+        </div>
+        <div class="details">
+            <div class="content">
+                <h2>Барон Мюнхгаузен <br>
+                    <span>Рудольфа Еріха Распе</span>
+                </h2>
+                <p>
+                    «Приго́ди баро́на Мюнхга́узена» (нім. Die Abenteuer des Baron Münchhausen) —
+                     роман у новелах німецького письменника Рудольфа Еріха Распе, що вперше
+                      вийшла друком у 1786 році. Книга складається з фантастичних розповідей
+                       від імені головного героя — барона Мюнхгаузена, який дійсно жив у Німеччині на початку XVIII століття.</p>
+                     В 1786 році ці історії було об'єднано під назвою власне «Пригоди барона Мюнхгаузена».
+                      Німецький поет Ґотфрід Август Бюргер впродовж 1776—1779 років переклав твір
+                       Распе німецькою мовою, включивши до нього декілька оригінальних розповідей,
+                       які відтоді вважаються невід'ємною складовою «Пригод барона Мюнхгаузена».</pp>
+
+<p>Українською мовою книгу вперше було перекладено Григором Тютюнником і видано в 1981 році за переказом Корнія Чуковського. Оригінальна книга складається з 20-и оповідок Распе і 8-и Бюргера, тоді як адаптації для дітей упускають частину з них.
+                </p>
+                
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
